@@ -105,6 +105,7 @@ PROGRAMMATIC USAGE
 Build an ATM
 
     Atm.Builder builder = new Atm.Builder();
+	builder.addNotes(Note.$10).withQuantityOf(1);
     builder.addNotes(Note.$20).withQuatityOf(10);
     builder.addNotes(Note.$50).withQuantityOf(20);
     builder.singleThreadCapable();
@@ -117,13 +118,29 @@ To withdraw from ATM
     withdrawal.isSuccessful(); // tells if ATM has enough notes to return the withdrawal amount
     System.out.println(withdrawal); // print withdrawal details
 
+An example of ``Withdrawal``'s ``toString()`` is as follows
+
+	Attempting to retrieve 100 
+	Retrieval outome success
+	Notes 
+	 $50 x 1
+	 $10 x 5
+	Outstanding 0
 
 To print summary of ATM
 
     Summary summary = atm.summary();
     System.out.println(summary); // print summary of atm
 
+An example of ``Summary``'s ``toString()``  is as follows
 
+	Notes currently in atm 
+     $10 x 0 
+     $20 x 3 
+     $50 x 0 
+
+
+	
 
 CONSOLE USAGE
 -------------
@@ -131,6 +148,15 @@ CONSOLE USAGE
 To run program in console
 
     $> mvn exec:java
+
+be sure to make sure the artifact (atm jar file) is in your local repository. You could do so 
+by running
+
+	$> mvn clean install
+
+which should run the tests as well, if you wish to skip the tests, run
+
+	$> mvn clean install -Dmaven.test.skip=true
 
 
 Example of one execution ...
@@ -145,43 +171,79 @@ Example of one execution ...
     [INFO] --- exec-maven-plugin:1.3:java (default-cli) @ atm ---
     [WARNING] Warning: killAfter is now deprecated. Do you need it ? Please comment on MEXEC-6.
     creating ATM ...
-    quantities of $20 (enter an integer followed by enter): 3
+    quantities of $10 (enter an integer followed by enter): 0
+    quantities of $20 (enter an integer followed by enter): 5
     quantities of $50 (enter an integer followed by enter): 2
-    multithread (y/n followed by enter)? n
+    multithread (y/n followed by enter)? y
     created atm ... ok
     s for atm summary, w for withdrawal, e to end followed by enter: s
     Notes currently in atm
+     $10 x 0
+     $20 x 5
      $50 x 2
-     $20 x 3
     s for atm summary, w for withdrawal, e to end followed by enter: w
-    sum to withdraw (an integer followed by enter)? 70
-    Attempting to retrieve 70
+    sum to withdraw (an integer followed by enter)? 100
+    Attempting to retrieve 100
     Retrieval outome success
     Notes
-     $50 x 1
-     $20 x 1
+     $50 x 2
     Outstanding 0
     s for atm summary, w for withdrawal, e to end followed by enter: s
     Notes currently in atm
-     $50 x 1
-     $20 x 2
+     $10 x 0
+     $20 x 5
+     $50 x 0
     s for atm summary, w for withdrawal, e to end followed by enter: w
-    sum to withdraw (an integer followed by enter)? 30
-    Attempting to retrieve 30
+    sum to withdraw (an integer followed by enter)? 10
+    Attempting to retrieve 10
     Retrieval outome failed
     Notes
-     $20 x 1
+      -- none --
     Outstanding 10
+    s for atm summary, w for withdrawal, e to end followed by enter: w
+    sum to withdraw (an integer followed by enter)? 1
+    Attempting to retrieve 1
+    Retrieval outome failed
+    Notes
+      -- none --
+    Outstanding 1
     s for atm summary, w for withdrawal, e to end followed by enter: s
     Notes currently in atm
-     $50 x 1
+     $10 x 0
+     $20 x 5
+     $50 x 0
+    s for atm summary, w for withdrawal, e to end followed by enter: w
+    sum to withdraw (an integer followed by enter)? 40
+    Attempting to retrieve 40
+    Retrieval outome success
+    Notes
      $20 x 2
+    Outstanding 0
+    s for atm summary, w for withdrawal, e to end followed by enter: s
+    Notes currently in atm
+     $10 x 0
+     $20 x 3
+     $50 x 0
+    s for atm summary, w for withdrawal, e to end followed by enter: 60
+    invalid input must be either [s, w, e]
+    s for atm summary, w for withdrawal, e to end followed by enter: w
+    sum to withdraw (an integer followed by enter)? 60
+    Attempting to retrieve 60
+    Retrieval outome success
+    Notes
+     $20 x 3
+    Outstanding 0
+    s for atm summary, w for withdrawal, e to end followed by enter: s
+    Notes currently in atm
+     $10 x 0
+     $20 x 0
+     $50 x 0
     s for atm summary, w for withdrawal, e to end followed by enter: e
-    Bye![INFO] ------------------------------------------------------------------------
+    Bye! ...
+    [INFO] ------------------------------------------------------------------------
     [INFO] BUILD SUCCESS
     [INFO] ------------------------------------------------------------------------
-    [INFO] Total time: 1:00.377s
-    [INFO] Final Memory: 9M/301M
+    [INFO] Total time: 1:30.855s
+    [INFO] Final Memory: 9M/305M
     [INFO] ------------------------------------------------------------------------
-
 
