@@ -1,4 +1,4 @@
-UTS Assignment - ATM Java Program
+Assignment - ATM Java Program
 =================================
 
 Instructions
