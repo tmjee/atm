@@ -120,8 +120,8 @@ abstract class Atomicity {
 
     static Atomicity newMultiThreadedAtomicity(final Map<Note, BigInteger> n) {
         return new Atomicity(){
-            private AtomicReference<NotesKeeper> notesKeeperRef = new AtomicReference<>(NotesKeeper.newCopy(n));
-            private StampedLock lock = new StampedLock();
+            private final AtomicReference<NotesKeeper> notesKeeperRef = new AtomicReference<>(NotesKeeper.newCopy(n));
+            private final StampedLock lock = new StampedLock();
 
             @Override
             void set(NotesKeeper notesKeeper) {

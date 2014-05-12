@@ -55,7 +55,7 @@ public class Atm {
     }
 
 
-    private Atomicity atomicity;
+    private final Atomicity atomicity;
 
     private Atm(Atomicity atomicity) {
         this.atomicity = atomicity;
